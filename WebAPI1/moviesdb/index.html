@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Movie App</title>
+</head>
+<body>
+
+    <div>
+        <h2>All Movies</h2>
+        <ul id="movies" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="movieId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="movie" />
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+
+    <script>
+    // Part 1
+    var uri = 'api/movies';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of movies.
+            $.each(data, function (key, item) {
+              // Add a list item for the movie.
+              $('<li>', { text: formatItem(item) }).appendTo($('#movies'));
+            });
+          });
+    });
+
+    function formatItem(item) {
+      return item.Name + ': $' + item.Price;
+    }
+    // Part 2
+    function find() {
+      var id = $('#movieId').val();
+      $.getJSON(uri + '/' + id)
+          .done(function (data) {
+            $('#movie').text(formatItem(data));
+          })
+          .fail(function (jqXHR, textStatus, err) {
+            $('#movie').text('Error: ' + err);
+          });
+    }
+    </script>
+</body>
+</html>
