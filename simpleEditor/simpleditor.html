@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Simple editing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        /* declare the css variables for live update */
+        :root{
+            --base: #ffc600;
+            --spacing: 10px;
+            --blur: 2px;
+        }
+        body {
+            text-align: center;
+            margin: 2px 2px;
+            background:rgb(60, 7, 110);
+            font-family: sans-serif;
+            font-size: 40px;
+        }
+        img {
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+        }
+        .controls {
+            margin-bottom: 26px;
+        }
+        input {
+            width: 90px;
+            padding: 0px 2px;
+            margin: 0px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Simple editing</h1>
+
+    <div class="controls">
+        <label for="base">Base: </label>
+        <input type="color" name="base" value="#ffc600" id="base">
+
+        <label for="blur">Blur:</label>
+        <input type="range" name="blur" min="0" max="25" data-sizing="px" id="blur">
+
+        <label for="spacing">Spacing:</label>
+        <input type="range" name="spacing" min="10" max="200" data-sizing="px" id="spacing">
+    </div>
+    
+    <img src="forest.jpg">
+
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+        
+        function update() {
+            console.log(this.value);
+            const suffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+        }
+
+        inputs.forEach(i => i.addEventListener('mousemove', update));
+        inputs.forEach(i => i.addEventListener('change', update));
+    </script>
+</body>
+</html>

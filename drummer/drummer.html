@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Drummer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="drum.css" />
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    <div id="drums">
+        <div class="key" data-key="65">
+            <kbd>A</kbd> <br> 
+            <span class="sound">Crash</span>
+        </div>
+        <div class="key" data-key="83">
+            <kbd>S</kbd>
+            <span class="sound">Bass</span>
+        </div>
+        <div class="key" data-key="68">
+            <kbd>D</kbd>
+            <span class="sound">Ride</span>
+        </div>
+        <div class="key" data-key="70">
+            <kbd>F</kbd>
+            <span class="sound">Clap</span>
+        </div>
+        <div class="key" data-key="71">
+            <kbd>G</kbd>
+            <span class="sound">Snare</span>
+        </div>   
+        <div class="key" data-key="72">
+            <kbd>H</kbd>
+            <span class="sound">Hard Tabla</span>
+        </div> 
+        <div class="key" data-key="74">
+            <kbd>J</kbd>
+            <span class="sound">Tabla Pressed</span>
+        </div>
+
+    </div>
+
+    <audio data-key="65" src="tones/crash.wav"></audio>
+    <audio data-key="83" src="tones/tai.wav"></audio>
+    <audio data-key="68" src="tones/ride.wav"></audio>
+    <audio data-key="70" src="tones/clap.wav"></audio>
+    <audio data-key="71" src="tones/kick.wav"></audio>
+    <audio data-key="72" src="tones/hardtabla.wav"></audio>
+    <audio data-key="74" src="tones/tablaPressed.wav"></audio>
+
+    <script>
+
+        function playdrum(e){
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            console.log(audio);
+            
+            if (!audio) 
+                return;
+            
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add('nowplaying');
+            
+        }
+        
+        function removeeffect(e){
+            if (e.propertyName !== 'transform') return;
+            e.target.classList.remove('nowplaying');
+        }
+
+        const drums = Array.from(document.querySelectorAll('.key'));
+        drums.forEach(tone => tone.addEventListener('transitionend', removeeffect));
+        window.addEventListener('keydown', playdrum);
+    </script>
+    
+</body>
+</html>

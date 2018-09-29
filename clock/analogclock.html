@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Analog Clock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <style>
+        body {
+            background: linear-gradient(to left, #66ff66 0%, #ffffcc 100%);
+            margin: 0;
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #cface{
+            border: 10px solid white;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            margin: 50px auto;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        .hand {
+            width: 45%;
+            height: 6px;
+            background: black;
+            position: absolute;
+            top: 50%;
+
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transform-origin: 100%;
+        }
+
+        .hourhand {
+            width: 35%;
+            margin-left: 34px;
+        }
+        .sechand {
+            background-color: rgb(34, 140, 226);
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="cface">
+        <div class = "hand minhand"></div>
+        <div class = "hand sechand"></div>
+        <div class = "hand hourhand"></div>
+    </div>
+
+    <script>
+        const mins = document.querySelector('.minhand');
+        const sec = document.querySelector('.sechand');
+        const hours = document.querySelector('.hourhand');
+        
+        function playtime(){
+            const current = new Date();
+            const second = current.getSeconds();
+            const secdg = ((second/60)*360)+90;
+            sec.style.transform = `rotate(${secdg}deg)`;
+
+            const minute = current.getMinutes();
+            const mindg  = ((minute/60)*360) + ((second/60)*6) + 90; 
+            mins.style.transform = `rotate(${mindg}deg)`;
+            
+            const hour = current.getHours();
+            const hrdg  = ((hour/12)*360) + ((minute/60)*30) + 90; 
+            hours.style.transform = `rotate(${hrdg}deg)`;
+        
+        }
+        setInterval(playtime, 1000);
+        playtime();
+    </script>
+
+</body>
+</html>
